@@ -1,0 +1,72 @@
+.assignments-container {
+    padding: 40px;
+    font-family: Arial, sans-serif;
+}
+
+.summary-cards {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card {
+    padding: 15px;
+    border-radius: 8px;
+    color: #fff;
+    text-align: center;
+    flex: 1;
+}
+
+.total { background: #0d0695; }
+.assigned { background: #6053ce; }
+.overdue { background: #7397e6; }
+.returned { background: #98cff6; }
+
+.filter-bar {
+    margin-bottom: 15px;
+}
+
+.filter-bar label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.assignments-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.assignments-table th, .assignments-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.assignments-table th {
+    background: #f4f4f4;
+}
+
+.status.assigned { color: #000000; }
+.status.overdue { color: #d00e0e; }
+.status.returned { color: #000000; }
+
+button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.return { background: #98cff6; color: white; }
+.mark-returned { background: #d00e0e; color: white; }
+.view { background: #007bff; color: white; }
+
+@media (max-width: 768px) {
+    .summary-cards {
+        flex-direction: column;
+    }
+    .table-container {
+        overflow-x: auto;
+    }
+}
