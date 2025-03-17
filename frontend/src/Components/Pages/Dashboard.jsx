@@ -35,7 +35,6 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>Equipment Management Dashboard</h1>
       <div className="cards-container">
         {devices.map((device, index) => (
           <div className="card" key={index}>

@@ -1,50 +1,61 @@
-import React from "react";
-import { FaBars, FaTachometerAlt, FaPlus, FaList, FaTasks, FaChartBar, FaCog, FaSignOutAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Button, Layout, theme } from "antd";
+import Logo from "../Logo";
+import MenuList from "../MenuList";
 import "./NavbarSidebar.css";
+import ToggleThemeButton from "../ToggleThemeButton";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Outlet } from "react-router-dom"; // Import Outlet for routing
 
-const NavbarSidebar = ({ isOpen, toggleSidebar }) => {
-  const handleLogout = () => {
-    alert("You have been logged out!");
+const { Header, Sider, Content } = Layout;
+
+function NavbarSidebar() {
+  const [darkTheme, setDarkTheme] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
+
+  const toggleTheme = () => {
+    setDarkTheme(!darkTheme);
   };
 
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+
   return (
-    <div className="layout">
-      {/* Navbar */}
-      <nav className="navbar">
-        {!isOpen && (
-          <button className="menu-btn" onClick={toggleSidebar}>
-            <FaBars />
-          </button>
-        )}
-        
-      </nav>
-
+    <Layout style={{ minHeight: "100vh" }}>
       {/* Sidebar */}
-      <div className={`sidebar ${isOpen ? "open" : ""}`}>
-        <div>
-          <img src="src/assets/vraLogo1.png" alt="logo" className="custom-image" />
-        </div>
-        <button className="menu-btn1" onClick={toggleSidebar}>
-          <FaBars />
-        </button>
-        <ul>
-          <li><Link to="/dashboard"><FaTachometerAlt /> Dashboard</Link></li>
-          <li><Link to="/AddEquipment"><FaPlus /> Add New Equipment</Link></li>
-          <li><Link to="/EquipmentList"><FaList /> Equipment List</Link></li>
-          <li><Link to="/assignments"><FaTasks /> Assignments</Link></li>
-          <li><Link to="/reports"><FaChartBar /> Reports</Link></li>
-          <li><Link to="/settings"><FaCog /> Settings</Link></li>
-          <li><Link to="/logout" onClick={handleLogout}><FaSignOutAlt /> Log out</Link></li>
-        </ul>
-      </div>
+      <Sider
+        collapsed={collapsed}
+        collapsible
+        trigger={null}
+        theme={darkTheme ? "dark" : "light"}
+        className="sidebar"
+      >
+        <Logo />
+        
+        <MenuList darkTheme={darkTheme} />
+        <ToggleThemeButton darkTheme={darkTheme} toggleTheme={toggleTheme} />
+      </Sider>
 
-      {/* Footer */}
-      <footer className="footer">
-        &copy; EMS 2025 powered by MIS . All Rights Reserved.
-      </footer>
-    </div>
+      {/* Main Content Area */}
+      <Layout>
+        <Header style={{ padding: 0, background: colorBgContainer }}>
+          <Button
+            type="text"
+            className="toggle"
+            onClick={() => setCollapsed(!collapsed)}
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          />
+          
+        </Header>
+
+        {/* Routed Components Will Appear Here */}
+        <Content style={{ margin: "16px", padding: "16px", background: "#fff" }}>
+          <Outlet />
+        </Content>
+      </Layout>
+    </Layout>
   );
-};
+}
 
 export default NavbarSidebar;
